@@ -38,12 +38,23 @@ const Reserver = () => {
   const handleSubmit = async () => {
     setSending(true);
     try {
-      // Build mailto link with form data for now
-      const subject = encodeURIComponent(`Demande de réservation - ${form.name}`);
-      const body = encodeURIComponent(
-        `Nouvelle demande de réservation:\n\nDépart: ${form.pickup}\nDestination: ${form.destination}\nDate: ${form.date}\nHeure: ${form.time}\nPassagers: ${form.passengers}\nBagages: ${form.luggage}\nNom: ${form.name}\nEmail: ${form.email}\nTéléphone: ${form.phone}\nNotes: ${form.notes}`
-      );
-      window.open(`mailto:covasbonenfant@gmail.com?subject=${subject}&body=${body}`, '_blank');
+      const { data, error } = await supabase.functions.invoke("send-booking", {
+        body: {
+          pickup: form.pickup,
+          destination: form.destination,
+          booking_date: form.date,
+          booking_time: form.time,
+          passengers: form.passengers,
+          luggage: form.luggage,
+          client_name: form.name,
+          client_email: form.email,
+          client_phone: form.phone,
+          notes: form.notes,
+        },
+      });
+
+      if (error) throw error;
+
       toast.success("Demande envoyée ! Nous vous recontacterons rapidement avec un devis.");
       setStep(0);
       setForm({ pickup: "", destination: "", date: "", time: "", passengers: "1", luggage: "0", name: "", email: "", phone: "", notes: "" });
