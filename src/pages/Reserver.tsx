@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Calendar, Clock, Users, Briefcase, Send, ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
