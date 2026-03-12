@@ -80,7 +80,7 @@ Deno.serve(async (req) => {
         },
         body: JSON.stringify({
           from: "Les Chauffeurs de Mougins <booking@resend.dev>",
-          to: ["covasbonenfant@gmail.com"],
+          to: ["kovasdriver@gmail.com"],
           subject: `Nouvelle réservation - ${client_name}`,
           html: emailHtml,
         }),
