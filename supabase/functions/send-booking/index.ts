@@ -72,19 +72,21 @@ Deno.serve(async (req) => {
         </table>
       `;
 
-      await fetch("https://api.resend.com/emails", {
+      const resendRes = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${resendApiKey}`,
         },
         body: JSON.stringify({
-          from: "Les Chauffeurs de Mougins <booking@resend.dev>",
+          from: "Les Chauffeurs de Mougins <onboarding@resend.dev>",
           to: ["kovasdriver@gmail.com"],
           subject: `Nouvelle réservation - ${client_name}`,
           html: emailHtml,
         }),
       });
+      const resendBody = await resendRes.text();
+      console.log("Resend status:", resendRes.status, "body:", resendBody);
     }
 
     return new Response(
